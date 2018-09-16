@@ -136,7 +136,7 @@ export const jsonSchema = `
       },
       "scheduler": {
           "$ref": "#/definitions/TaskObject",
-          "description": "     \"weekly\": \"cleanup-stale-issues\"\n     }"
+          "description": " "
       },
       "settings": {
           "$ref": "#/definitions/GitHubInstallationSettings",

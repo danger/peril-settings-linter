@@ -39,39 +39,47 @@ export interface RunnerRuleset {
   [name: string]: DangerfileReferenceString | DangerfileReferenceString[]
 }
 
-export default async function lint(referencesOrObject: string, api: octokit): Promise<ErrorReport> {
+export default async function lint(
+  settingsReference: string,
+  api: octokit,
+  currentSettings?: FileRelatedPartOfJSON,
+): Promise<ErrorReport> {
   // Grab the settings JSON
-  const rep = dangerRepresentationForPath(referencesOrObject)
+  const rep = dangerRepresentationForPath(settingsReference)
   if (!rep.repoSlug) {
     throw new Error("The dangerfile reference did not have a repo")
   }
 
-  const settingsContents = await fileContents(api, rep.dangerfilePath, rep.repoSlug, rep.branch)
-  if (settingsContents === "") {
-    throw new Error(`Could not find a file at ${referencesOrObject}`)
-  }
+  let json = currentSettings
 
-  let json: FileRelatedPartOfJSON
+  // In danger instead of peril for example
+  if (!json) {
+    const settingsContents = await fileContents(api, rep.dangerfilePath, rep.repoSlug, rep.branch)
+    if (settingsContents === "") {
+      throw new Error(`Could not find a file at ${settingsReference}`)
+    }
 
-  try {
-    json = JSON5.parse(settingsContents)
-  } catch (error) {
-    // tslint:disable-next-line:no-console
-    console.error(`Could not parse the file at ${referencesOrObject}`)
-    throw error
+    try {
+      json = JSON5.parse(settingsContents)
+    } catch (error) {
+      // tslint:disable-next-line:no-console
+      console.error(`Could not parse the file at ${settingsReference}`)
+      throw error
+    }
   }
 
   // Grab the official schema, the run it through ajv
   const schemaContent = await fileContents(api, "peril-settings-json.schema", "danger/peril", "master")
   const validator = new ajv()
-  const valid = validator.validate(schemaContent, json)
+  const valid = validator.validate(JSON.parse(schemaContent), json)
 
   const networkErrors = [] as string[]
-  const allSettingsRefs = allFileReferencesForSettings(rep.repoSlug, json)
+  const allSettingsRefs = allFileReferencesForSettings(rep.repoSlug, json!)
   for (const defs of allSettingsRefs) {
     const localRef = dangerRepresentationForPath(defs)
     const fileExists = await fileContents(api, localRef.dangerfilePath, localRef.repoSlug!, localRef.branch)
-    if (fileExists === "") {
+
+    if (!fileExists || fileExists === "") {
       networkErrors.push(defs)
     }
   }
@@ -102,7 +110,7 @@ export const allFileReferencesForSettings = (settingsRepo: string, settings: Fil
 }
 
 /**
- * Gets all the dangerfile reference from a settings subset
+ * Gets all the dangerfile reference from a settings rule subset
  */
 export const references = (repo: string, settings: RunnerRuleset): DangerfileReferenceString[] => {
   const files = Object.keys(settings).map(s => settings[s])

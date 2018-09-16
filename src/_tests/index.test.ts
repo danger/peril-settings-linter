@@ -1,6 +1,10 @@
-jest.mock("../utils", () => ({ fileContents: jest.fn }))
+// jest.mock("../utils", () => ({ fileContents: jest.fn() }))
 import lint, { allFileReferencesForSettings, references } from "../"
-import { fileContents } from "../utils"
+import * as utils from "../utils"
+
+// @ts-ignore
+utils.fileContents = jest.fn()
+
 import { fixturedSettingsJSON, jsonSchema } from "./fixtures"
 
 describe("file refs", () => {
@@ -72,10 +76,36 @@ describe("file refs", () => {
   })
 })
 
-it.skip("lints", async () => {
-  const mockContent: jest.Mock<string> = fileContents as any
+it("lints", async () => {
+  const mockContent: jest.Mock<string> = utils.fileContents as any
+  // 1st = settings
+  mockContent.mockReturnValueOnce(Promise.resolve(fixturedSettingsJSON))
+
+  // 2nd = schema
   mockContent.mockReturnValueOnce(Promise.resolve(jsonSchema))
 
+  // After this, it's network calls for the settings
+  const firstReference = "artsy/peril-settings@org/newRelease.ts"
+  mockContent.mockReturnValueOnce(Promise.resolve("console.log('hi')"))
+
   const results = await lint("artsy/peril-settings@settings.json", {} as any)
-  expect(results).toEqual({})
+
+  // Ensure the network result that wasn't falsy isn't in there
+  expect(results.networkErrors).not.toContain(firstReference)
+
+  expect(results).toEqual({
+    schemaErrors: [],
+    networkErrors: [
+      "artsy/peril-settings@org/allPRs.ts",
+      "artsy/peril-settings@org/closedPRs.ts",
+      "artsy/peril-settings@danger/newRFC.ts",
+      "artsy/peril-settings@org/markAsMergeOnGreen.ts",
+      "artsy/peril-settings@org/mergeOnGreen.ts",
+      "artsy/reaction@danger/pr.ts",
+      "artsy/force@dangerfile.ts",
+      "artsy/positron@dangerfile.ts",
+      "artsy/exchange@dangerfile.ts",
+      "artsy/volt@dangerfile.ts",
+    ],
+  })
 })

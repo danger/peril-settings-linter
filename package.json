@@ -57,5 +57,10 @@
     "trailingComma": "es5",
     "bracketSpacing": true,
     "proseWrap": "always"
+  },
+  "dependencies": {
+    "@octokit/rest": "^15.11.2",
+    "ajv": "^6.5.3",
+    "json5": "^2.0.1"
   }
 }

@@ -21,6 +21,7 @@ export interface ErrorObject {
 
 export interface ErrorReport {
   schemaErrors: ErrorObject[]
+  schemaHumanReadableErrors: string
   networkErrors: string[]
 }
 
@@ -86,6 +87,7 @@ export default async function lint(
 
   return {
     schemaErrors: !valid ? validator.errors! : [],
+    schemaHumanReadableErrors: !valid ? validator.errorsText(validator.errors!) : "",
     networkErrors,
   }
 }

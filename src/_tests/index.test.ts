@@ -1,4 +1,3 @@
-// jest.mock("../utils", () => ({ fileContents: jest.fn() }))
 import lint, { allFileReferencesForSettings, references } from "../"
 import * as utils from "../utils"
 
@@ -95,6 +94,7 @@ it("lints", async () => {
 
   expect(results).toEqual({
     schemaErrors: [],
+    schemaHumanReadableErrors: "",
     networkErrors: [
       "artsy/peril-settings@org/allPRs.ts",
       "artsy/peril-settings@org/closedPRs.ts",

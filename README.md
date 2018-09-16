@@ -1,6 +1,6 @@
 peril-settings-linter
 
-[Your README here]
+A node module for linting the settings json for Peril
 
 ## How do I work on this?
 

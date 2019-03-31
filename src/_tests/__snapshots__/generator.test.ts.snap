@@ -1,0 +1,374 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`creates a JS with no tests setup 1`] = `
+Object {
+  ".gitignore": "
+logs
+* .log
+npm - debug.log *
+yarn - debug.log *
+
+# Dependency directories
+node_modules
+jspm_packages
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+",
+  "README.md": "
+## User Name Peril Settings
+
+### What is this project?
+
+This is the configuration repo for Peril on the Artsy org. There is a [settings file](settings.json) and org-wide
+dangerfiles which are inside the [org folder](org/).
+
+Here's some links to the key concepts:
+
+- [Peril](https://github.com/danger/peril)
+- [Danger JS](http://danger.systems/js/)
+- [Peril for Orgs](https://github.com/danger/peril/blob/master/docs/setup_for_org.md)
+- [Introducing Peril to the Artsy org](http://artsy.github.io/blog/2017/09/04/Introducing-Peril/)
+- [Peril's Dashboard 🔐](https://staging-dashboard.peril.systems/)
+
+### TL:DR on this Repo?
+
+Peril is Danger running on a web-server, this repo is the configuration for that. The dangerfiles for our org live
+in [\`org\`](org)
+
+### To Develop
+
+\`\`\`sh
+git clone https://github.com/User Name/Fake Repo.git
+cd Fake Repo
+yarn install
+code .
+\`\`\`
+
+You will need node and yarn installed beforehand. You can get them both by running \`brew install yarn\`. This will give
+you auto-completion and types for Danger/Peril when working on your rules.
+
+#### Adding a rule
+
+Create a new rule by making a new Dangerfile:
+
+
+\`\`\`ts
+// org/myRuleName.js
+export default async () => {
+  // [...]
+})
+\`\`\`
+
+
+",
+  "org/checkForPRBody.js": "
+export default () => {
+const pr = danger.github.pr
+if (pr.body === null || pr.body.length === 0) {
+  fail(\\"Please add a description to your PR.\\")
+}
+}
+",
+  "package.json": "{
+  \\"scripts\\": {},
+  \\"dependencies\\": {
+    \\"@octokit/rest\\": \\"16.15.0\\",
+    \\"@sentry/node\\": \\"4.1.1\\",
+    \\"@slack/client\\": \\"4.8.0\\",
+    \\"agenda\\": \\"1.0.3\\",
+    \\"apollo-server-express\\": \\"1.4.0\\",
+    \\"async-exit-hook\\": \\"2.0.1\\",
+    \\"aws-sdk\\": \\"2.374.0\\",
+    \\"babel-polyfill\\": \\"7.0.0-alpha.19\\",
+    \\"body-parser\\": \\"1.18.3\\",
+    \\"chalk\\": \\"2.4.2\\",
+    \\"cookie\\": \\"0.3.1\\",
+    \\"cookie-parser\\": \\"1.4.3\\",
+    \\"cors\\": \\"2.8.4\\",
+    \\"danger\\": \\"7.0.13\\",
+    \\"debug\\": \\"4.1.1\\",
+    \\"dotenv\\": \\"5.0.1\\",
+    \\"express\\": \\"4.16.4\\",
+    \\"express-x-hub\\": \\"1.0.4\\",
+    \\"github-webhook-event-types\\": \\"1.2.1\\",
+    \\"graphql\\": \\"0.13.2\\",
+    \\"graphql-playground-middleware-express\\": \\"1.7.5\\",
+    \\"graphql-relay\\": \\"0.5.5\\",
+    \\"graphql-resolvers\\": \\"0.2.2\\",
+    \\"graphql-tools\\": \\"3.1.1\\",
+    \\"graphql-tools-types\\": \\"1.1.26\\",
+    \\"json5\\": \\"2.1.0\\",
+    \\"jsonwebtoken\\": \\"8.4.0\\",
+    \\"lodash\\": \\"4.17.11\\",
+    \\"mongoose\\": \\"5.3.4\\",
+    \\"node-fetch\\": \\"2.3.0\\",
+    \\"node-mocks-http\\": \\"1.7.3\\",
+    \\"override-require\\": \\"1.1.1\\",
+    \\"primus\\": \\"7.2.3\\",
+    \\"require-from-string\\": \\"2.0.2\\",
+    \\"url\\": \\"0.10.3\\",
+    \\"uuid\\": \\"3.3.2\\",
+    \\"winston\\": \\"3.2.1\\",
+    \\"winston-papertrail\\": \\"1.0.5\\"
+  },
+  \\"devDependencies\\": {
+    \\"@graphql-inspector/core\\": \\"0.13.2\\",
+    \\"@babel/core\\": \\"7.3.3\\",
+    \\"@babel/plugin-proposal-class-properties\\": \\"7.3.3\\",
+    \\"@babel/plugin-proposal-object-rest-spread\\": \\"7.3.2\\",
+    \\"@babel/plugin-transform-flow-strip-types\\": \\"7.2.3\\",
+    \\"@babel/plugin-transform-regenerator\\": \\"7.0.0\\",
+    \\"@babel/preset-env\\": \\"7.3.1\\",
+    \\"@babel/preset-typescript\\": \\"7.3.3\\",
+    \\"@types/lodash\\": \\"^4.14.116\\",
+    \\"@types/node\\": \\"^9.1.2\\",
+    \\"@types/node-fetch\\": \\"^2.1.2\\",
+    \\"danger-plugin-spellcheck\\": \\"^1.2.3\\",
+    \\"danger-plugin-yarn\\": \\"^1.2.1\\",
+    \\"googleapis\\": \\"^36.0.0\\",
+    \\"graphql-relay-tools\\": \\"0.1.1\\",
+    \\"graphql-schema-utils\\": \\"0.6.6\\",
+    \\"jira-client\\": \\"6.4.1\\",
+    \\"semver-sort\\": \\"0.0.4\\"
+  }
+}",
+  "peril.settings.json": "{
+  \\"$schema\\": \\"https://raw.githubusercontent.com/danger/peril/master/peril-settings-json.schema\\",
+  \\"rules\\": {
+    \\"pull_request\\": \\"org/checkForPRBody.js\\"
+  }
+}",
+}
+`;
+
+exports[`creates the right typescript setup 1`] = `
+Object {
+  ".gitignore": "
+logs
+* .log
+npm - debug.log *
+yarn - debug.log *
+
+# Dependency directories
+node_modules
+jspm_packages
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+",
+  "LICENSE": "The MIT License (MIT)
+
+Copyright (c) User Name
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the \\"Software\\"), to deal
+    in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do { so, subject } to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \\"AS IS\\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    ",
+  "README.md": "
+## User Name Peril Settings
+
+### What is this project?
+
+This is the configuration repo for Peril on the Artsy org. There is a [settings file](settings.json) and org-wide
+dangerfiles which are inside the [org folder](org/).
+
+Here's some links to the key concepts:
+
+- [Peril](https://github.com/danger/peril)
+- [Danger JS](http://danger.systems/js/)
+- [Peril for Orgs](https://github.com/danger/peril/blob/master/docs/setup_for_org.md)
+- [Introducing Peril to the Artsy org](http://artsy.github.io/blog/2017/09/04/Introducing-Peril/)
+- [Peril's Dashboard 🔐](https://staging-dashboard.peril.systems/)
+
+### TL:DR on this Repo?
+
+Peril is Danger running on a web-server, this repo is the configuration for that. The dangerfiles for our org live
+in [\`org\`](org)
+
+### To Develop
+
+\`\`\`sh
+git clone https://github.com/User Name/Fake Repo.git
+cd Fake Repo
+yarn install
+yarn jest
+
+code .
+\`\`\`
+
+You will need node and yarn installed beforehand. You can get them both by running \`brew install yarn\`. This will give
+you auto-completion and types for Danger/Peril when working on your rules.
+
+#### Adding a rule
+
+Create a new rule by making a new Dangerfile:
+
+
+\`\`\`ts
+// org/myRuleName.ts
+export default async () => {
+  // [...]
+})
+\`\`\`
+
+
+#### Testing a rule
+
+We use Jest to test our Dangerfiles. It uses the same techniques as testing a
+[danger plugin](http://danger.systems/js/usage/extending-danger.html) where the global imports from danger are faked.
+
+1.  Create a file for your rule: \`org/_tests/[x].test..ts\`.
+2.  Add a \`before\` and \`after\` setting up and resetting mocks:
+
+    \`\`\`ts
+    jest.mock(\\"danger\\", () => jest.fn())
+    import * as danger from \\"danger\\"
+    const dm = danger as any
+
+    beforeEach(() => {
+      dm.danger = {}
+      dm.fail = jest.fn() // as necessary
+    })
+
+    afterEach(() => {
+      dm.fail = undefined
+    })
+    \`\`\`
+
+3.  Set up your danger object and run the function exported in \`all-prs.ts\`:
+
+    \`\`\`ts
+    import rfcN from \\"../org/all-prs\\"
+
+    it(\\"warns when there's there's no assignee and no WIP in the title\\", async () => {
+      dm.danger.github = { pr: { title: \\"Changes to the setup script\\", assignee: null } }
+      await rfcN()
+
+      expect(something).toHappen()
+        // [...]
+      })
+    })
+    \`\`\`
+
+4.  Validate that the \`fail\`/\`warn\`/\`message\`/\`markdown\` functions are called.
+
+
+",
+  "org/checkForPRBody.ts": "
+export default () => {
+const pr = danger.github.pr
+if (pr.body === null || pr.body.length === 0) {
+  fail(\\"Please add a description to your PR.\\")
+}
+}
+",
+  "package.json": "{
+  \\"scripts\\": {
+    \\"type-check\\": \\"tsc --no-emit\\",
+    \\"test\\": \\"jest\\"
+  },
+  \\"license\\": \\"MIT\\",
+  \\"dependencies\\": {
+    \\"@octokit/rest\\": \\"16.15.0\\",
+    \\"@sentry/node\\": \\"4.1.1\\",
+    \\"@slack/client\\": \\"4.8.0\\",
+    \\"agenda\\": \\"1.0.3\\",
+    \\"apollo-server-express\\": \\"1.4.0\\",
+    \\"async-exit-hook\\": \\"2.0.1\\",
+    \\"aws-sdk\\": \\"2.374.0\\",
+    \\"babel-polyfill\\": \\"7.0.0-alpha.19\\",
+    \\"body-parser\\": \\"1.18.3\\",
+    \\"chalk\\": \\"2.4.2\\",
+    \\"cookie\\": \\"0.3.1\\",
+    \\"cookie-parser\\": \\"1.4.3\\",
+    \\"cors\\": \\"2.8.4\\",
+    \\"danger\\": \\"7.0.13\\",
+    \\"debug\\": \\"4.1.1\\",
+    \\"dotenv\\": \\"5.0.1\\",
+    \\"express\\": \\"4.16.4\\",
+    \\"express-x-hub\\": \\"1.0.4\\",
+    \\"github-webhook-event-types\\": \\"1.2.1\\",
+    \\"graphql\\": \\"0.13.2\\",
+    \\"graphql-playground-middleware-express\\": \\"1.7.5\\",
+    \\"graphql-relay\\": \\"0.5.5\\",
+    \\"graphql-resolvers\\": \\"0.2.2\\",
+    \\"graphql-tools\\": \\"3.1.1\\",
+    \\"graphql-tools-types\\": \\"1.1.26\\",
+    \\"json5\\": \\"2.1.0\\",
+    \\"jsonwebtoken\\": \\"8.4.0\\",
+    \\"lodash\\": \\"4.17.11\\",
+    \\"mongoose\\": \\"5.3.4\\",
+    \\"node-fetch\\": \\"2.3.0\\",
+    \\"node-mocks-http\\": \\"1.7.3\\",
+    \\"override-require\\": \\"1.1.1\\",
+    \\"primus\\": \\"7.2.3\\",
+    \\"require-from-string\\": \\"2.0.2\\",
+    \\"url\\": \\"0.10.3\\",
+    \\"uuid\\": \\"3.3.2\\",
+    \\"winston\\": \\"3.2.1\\",
+    \\"winston-papertrail\\": \\"1.0.5\\"
+  },
+  \\"devDependencies\\": {
+    \\"@graphql-inspector/core\\": \\"0.13.2\\",
+    \\"@babel/core\\": \\"7.3.3\\",
+    \\"@babel/plugin-proposal-class-properties\\": \\"7.3.3\\",
+    \\"@babel/plugin-proposal-object-rest-spread\\": \\"7.3.2\\",
+    \\"@babel/plugin-transform-flow-strip-types\\": \\"7.2.3\\",
+    \\"@babel/plugin-transform-regenerator\\": \\"7.0.0\\",
+    \\"@babel/preset-env\\": \\"7.3.1\\",
+    \\"@babel/preset-typescript\\": \\"7.3.3\\",
+    \\"@types/lodash\\": \\"^4.14.116\\",
+    \\"@types/node\\": \\"^9.1.2\\",
+    \\"@types/node-fetch\\": \\"^2.1.2\\",
+    \\"danger-plugin-spellcheck\\": \\"^1.2.3\\",
+    \\"danger-plugin-yarn\\": \\"^1.2.1\\",
+    \\"googleapis\\": \\"^36.0.0\\",
+    \\"graphql-relay-tools\\": \\"0.1.1\\",
+    \\"graphql-schema-utils\\": \\"0.6.6\\",
+    \\"jira-client\\": \\"6.4.1\\",
+    \\"semver-sort\\": \\"0.0.4\\",
+    \\"typescript\\": \\"*\\",
+    \\"jest\\": \\"*\\"
+  }
+}",
+  "peril.settings.json": "{
+  \\"$schema\\": \\"https://raw.githubusercontent.com/danger/peril/master/peril-settings-json.schema\\",
+  \\"rules\\": {
+    \\"pull_request\\": \\"org/checkForPRBody.ts\\"
+  }
+}",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"target\\": \\"es2017\\",
+    \\"module\\": \\"commonjs\\",
+    \\"resolveJsonModule\\": true,
+    \\"allowSyntheticDefaultImports\\": true,
+    \\"lib\\": [
+      \\"es2017\\"
+    ],
+    \\"strict\\": true
+  }
+}",
+}
+`;

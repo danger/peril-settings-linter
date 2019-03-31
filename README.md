@@ -1,11 +1,38 @@
-peril-settings-linter
+# @peril/utils
 
-A node module for linting the settings json for Peril.
+Maybe this will turn into a mono-repo with a lot of smaller packages, but for now - this is fine.
+
+### Generating a Peril Settings Repo
+
+```typescript
+export const fileMapForPerilSettingsRepo = async (api: octokit, options: NewRepoOptions)
+```
+
+Which returns a [fileMap](https://github.com/orta/memfs-or-file-map-to-github-branch) for an example Peril settings
+repo. There are a few options.
+
+Usage:
+
+```ts
+const map = await fileMapForPerilSettingsRepo(api, {
+  isPublic: true,
+  setupTests: true,
+  useTypeScript: true,
+  repo: {
+    name: "Fake Repo",
+    owner: {
+      login: "User Name",
+    },
+  },
+})
+```
+
+### Linting
 
 Mainly one function:
 
 ```typescript
-export default function lint(
+export function lint(
   settingsReference: string,
   api: octokit,
   currentSettings?: FileRelatedPartOfJSON
@@ -19,7 +46,7 @@ version in the `settingsReference`.
 Usage:
 
 ```typescript
-import lint from "peril-settings-linter"
+import { lint } from "peril-settings-linter"
 
 const runLinter = async () => {
   const results = await lint("artsy/peril-settings@settings.json", api)
@@ -42,9 +69,11 @@ cd peril-settings-linter
 yarn install
 
 # Open VS Code with `code .`
+code .
 
 # Run tests
 yarn jest
+yarn type-check
 ```
 
 ## How do I deploy this?

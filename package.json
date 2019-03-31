@@ -1,6 +1,7 @@
 {
   "name": "@peril/utils",
   "version": "1.0.1",
+  "private": false,
   "description": "",
   "main": "build/index.js",
   "author": "Orta Therox <orta.therox@gmail.com>",
@@ -29,8 +30,9 @@
     "build": "tsc",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "precommit": "lint-staged",
-    "prepush": "npm run build",
-    "release": "release-it"
+    "prepush": "yarn build",
+    "release": "release-it",
+    "prepublishOnly": "yarn build"
   },
   "lint-staged": {
     "*.@(ts|tsx)": [

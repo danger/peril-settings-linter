@@ -18,7 +18,8 @@ export interface NewRepoOptions {
 
 export const prBody = (options: NewRepoOptions) => `## Welcome to Peril
 
-This PR sets up the repo for your Peril settings, once this is merged then you can go back
+This PR sets up the repo for your Peril settings, once this is merged then you can go back to the Peril dashboard
+and wrap up on-boarding.
 `
 
 const jestSetup = (options: NewRepoOptions) => {

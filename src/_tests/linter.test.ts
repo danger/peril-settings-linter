@@ -1,4 +1,4 @@
-import lint, { allFileReferencesForSettings, references } from "../"
+import { allFileReferencesForSettings, lint, references } from ".."
 import * as utils from "../utils"
 
 // @ts-ignore
@@ -7,7 +7,7 @@ utils.fileContents = jest.fn()
 import { fixturedSettingsJSON, jsonSchema } from "./fixtures"
 
 describe("file refs", () => {
-  it("gets allfile refs for json", () => {
+  it("gets all file refs for json", () => {
     const settings = {
       $schema: "https://raw.githubusercontent.com/danger/peril/master/peril-settings-json.schema",
 
